@@ -4,9 +4,6 @@ date: 2026-06-02
 authors: ["thewhaleking"]
 tags: ["meta", "engineering"]
 summary: "Why we built this blog the way we did — Markdown in, static site out."
-cover:
-  image: "cover.png"
-  alt: "Latent Engineering blog cover"
 draft: false
 ---
 
@@ -23,10 +20,7 @@ its images live together in one folder, a pull request adds them, and merging to
 - Each post is a *page bundle* — a folder containing `index.md` plus any images.
 - **Tags** and **authors** are driven by frontmatter and rendered as their own pages.
 - A GitHub Action builds the static site with [Hugo](https://gohugo.io) and publishes it.
-
-Here's a co-located image, loaded straight from this post's folder:
-
-![A placeholder cover image](cover.png)
+- Images go in the post's own folder and are referenced relatively, e.g. `![alt](diagram.png)`.
 
 ## Adding your own post
 
