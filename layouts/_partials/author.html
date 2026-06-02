@@ -1,0 +1,16 @@
+{{- /*
+  Project override of PaperMod's author byline.
+  Each `authors` taxonomy term is a GitHub username; we render the user's GitHub
+  display name (fetched via github_user.html) linked to their on-site archive page
+  at /authors/<login>/.
+*/ -}}
+{{- $terms := .GetTerms "authors" -}}
+{{- with $terms -}}
+    {{- $links := slice -}}
+    {{- range . -}}
+        {{- $login := .Data.Term | default (.Page.LinkTitle | lower) -}}
+        {{- $gh := partial "github_user.html" $login -}}
+        {{- $links = $links | append (printf "<a href=\"%s\">%s</a>" .Page.Permalink $gh.name) -}}
+    {{- end -}}
+    {{- delimit $links ", " | safeHTML -}}
+{{- end -}}

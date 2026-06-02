@@ -1,0 +1,62 @@
+baseURL = "https://latent-to.github.io/blog/"
+locale = "en-us"
+title = "Latent Engineering"
+theme = "PaperMod"
+
+# Generate a clean RSS/Atom feed alongside HTML.
+[outputs]
+home = ["HTML", "RSS"]
+
+# Pagination for the post list.
+[pagination]
+pagerSize = 10
+
+# Taxonomies: built-in tags + a custom `author` taxonomy so every author
+# gets an archive page automatically. Rich author profiles live in
+# data/authors.yaml, keyed by the same value used in a post's `author` field.
+[taxonomies]
+tag = "tags"
+author = "authors"
+
+[params]
+# PaperMod: show the author/tags/reading-time line and enable nicer post UX.
+ShowReadingTime = true
+ShowShareButtons = false
+ShowPostNavLinks = true
+ShowBreadCrumbs = true
+ShowCodeCopyButtons = true
+ShowToc = true
+defaultTheme = "auto"
+description = "Engineering notes, deep dives, and war stories from the Latent team."
+
+[params.homeInfoParams]
+Title = "Latent Engineering"
+Content = "Deep dives, postmortems, and notes from the team building Latent."
+
+[[menu.main]]
+identifier = "posts"
+name = "Posts"
+url = "/posts/"
+weight = 10
+
+[[menu.main]]
+identifier = "tags"
+name = "Tags"
+url = "/tags/"
+weight = 20
+
+[[menu.main]]
+identifier = "authors"
+name = "Authors"
+url = "/authors/"
+weight = 30
+
+[markup.highlight]
+noClasses = false
+codeFences = true
+guessSyntax = true
+
+# Cache GitHub profile lookups (resources.GetRemote in github_user.html) so we
+# don't refetch on every local rebuild; CI runs start cold and refetch.
+[caches.getresource]
+maxAge = "24h"
