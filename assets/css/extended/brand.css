@@ -1,0 +1,74 @@
+/* ------------------------------------------------------------------ *
+ * Latent brand theme — matches https://latent.to
+ *   bg #FAF9F6 · text #101010 · links #1a5276 · monospace · light headings
+ * Loaded after PaperMod core CSS, so these overrides win.
+ * ------------------------------------------------------------------ */
+
+/* Light palette (the brand's primary look) */
+:root {
+    --theme: #faf9f6;   /* page background (cream) */
+    --entry: #ffffff;   /* cards / entries */
+    --primary: #101010; /* titles, strong text */
+    --secondary: #5c5c5c; /* meta, muted text */
+    --tertiary: #e7e4dc;  /* hovers, subtle fills */
+    --content: #1a1a1a;   /* body copy */
+    --code-bg: #efebe2;   /* inline code (warm) */
+    --border: #e7e4dc;
+    --link: #1a5276;      /* brand link blue */
+}
+
+/* Dark palette — a coherent inverse of the brand, same blue accent */
+:root[data-theme="dark"] {
+    --theme: #101010;
+    --entry: #1a1a1a;
+    --primary: #faf9f6;
+    --secondary: #9a9a9a;
+    --tertiary: #2a2a2a;
+    --content: #e6e3da;
+    --code-bg: #2a2a2a;
+    --border: #2a2a2a;
+    --link: #6fa8cc;      /* lightened for contrast on dark */
+}
+
+/* Monospace everywhere, like latent.to */
+html,
+body,
+button,
+input,
+textarea,
+select {
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas,
+        "Liberation Mono", "Roboto Mono", monospace;
+}
+
+/* Understated headings (brand uses normal weight; 500 keeps light hierarchy) */
+h1, h2, h3, h4, h5, h6,
+.post-title,
+.entry-header h2 {
+    font-weight: 500;
+}
+
+/* Links: brand blue, weight 500, underline only on hover */
+a {
+    color: var(--link);
+}
+.post-content a {
+    color: var(--link);
+    box-shadow: none;
+    text-decoration: none;
+}
+.post-content a:hover {
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+/* Keep structural/nav text in the primary ink, not link-blue, so the
+   chrome stays calm and only in-content links pop (as on latent.to). */
+.logo a,
+.nav .logo a,
+#menu a,
+.entry-header h2,
+.post-entry .entry-link,
+.first-entry .entry-link {
+    color: var(--primary);
+}

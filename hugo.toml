@@ -34,7 +34,7 @@ description = "Engineering notes, deep dives, and war stories from the Latent te
 
 [params.homeInfoParams]
 Title = "Latent Engineering"
-Content = "Deep dives, postmortems, and notes from the team building Latent."
+Content = "Deep dives, postmortems, and notes from the team at Latent."
 
 [[menu.main]]
 identifier = "posts"
