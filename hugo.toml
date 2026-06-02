@@ -1,3 +1,6 @@
+# Local-dev default only. The deploy workflow overrides this at build time with
+# the real Pages URL via `--baseURL`; for a Private Pages site that's a
+# randomized *.pages.github.io domain, so production links are always correct.
 baseURL = "https://latent-to.github.io/blog/"
 locale = "en-us"
 title = "Latent Engineering"

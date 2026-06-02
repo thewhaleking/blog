@@ -50,5 +50,9 @@ hugo --gc --minify                         # production build into public/
 ## One-time setup
 
 In the GitHub repo: **Settings → Pages → Build and deployment → Source =
-"GitHub Actions"**. The site then publishes to
-`https://latent-to.github.io/blog/` (set as `baseURL` in `hugo.toml`).
+"GitHub Actions"**. The deploy workflow then builds with the URL GitHub assigns
+the site (passed via `--baseURL`), so production links are always correct — no
+need to keep `baseURL` in `hugo.toml` in sync. Note: while **Pages visibility is
+Private**, GitHub serves the site from a randomized `*.pages.github.io` domain
+(only repo members can view it); switch visibility to Public for the stable
+`latent-to.github.io/blog/` URL.
