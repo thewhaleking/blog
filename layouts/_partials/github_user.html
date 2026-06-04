@@ -1,14 +1,14 @@
 {{- /*
-  Fetch a GitHub user's public profile at build time, keyed by login (the value
-  used in a post's `authors` frontmatter). Returns a dict:
+  Resolve a GitHub author's profile from baked-in site data (data/authors.yaml),
+  keyed by login (the value used in a post's `authors` frontmatter). Returns a
+  dict:
       { login, name, avatar, bio, url }
 
-  Resilient by design — if the API is unreachable, rate-limited, or the user
-  doesn't exist, it falls back to the login so the build never fails on network.
-  Set HUGO_GITHUB_TOKEN (the workflows pass the Action's GITHUB_TOKEN) to
-  authenticate the request and avoid the 60-req/hour unauthenticated rate limit.
-  Responses are cached by Hugo (see [caches.getresource] in hugo.toml), so each
-  login is fetched at most once per build regardless of how many posts use it.
+  The data file is regenerated out-of-band by scripts/refresh_authors.py (run by
+  the "Refresh author profiles" workflow), so the build itself never touches the
+  GitHub API — no token, no network, no rate limits. If a login has no entry yet
+  (e.g. a brand-new author whose refresh PR hasn't merged), it falls back to the
+  login so the build never fails.
 
   Usage: {{ $u := partial "github_user.html" "octocat" }}
 */ -}}
@@ -19,27 +19,12 @@
     "avatar" ""
     "bio" ""
     "url" (printf "https://github.com/%s" $login) -}}
-{{- $opts := dict -}}
-{{- with getenv "HUGO_GITHUB_TOKEN" -}}
-    {{- $opts = dict "headers" (dict "Authorization" (printf "Bearer %s" .)) -}}
-{{- end -}}
-{{- with try (resources.GetRemote (printf "https://api.github.com/users/%s" $login) $opts) -}}
-    {{- with .Err -}}
-        {{- warnf "github_user: fetch failed for %q: %s" $login . -}}
-    {{- else with .Value -}}
-        {{- if eq .Data.StatusCode 200 -}}
-            {{- $u := .Content | transform.Unmarshal -}}
-            {{- $data = dict
-                "login" (or $u.login $login)
-                "name" (or $u.name $login)
-                "avatar" (or $u.avatar_url "")
-                "bio" (or $u.bio "")
-                "url" (or $u.html_url $data.url) -}}
-        {{- else -}}
-            {{- warnf "github_user: %q returned HTTP %d (using fallback)" $login .Data.StatusCode -}}
-        {{- end -}}
-    {{- else -}}
-        {{- warnf "github_user: no response for %q (using fallback)" $login -}}
-    {{- end -}}
+{{- with index hugo.Data.authors $login -}}
+    {{- $data = dict
+        "login" $login
+        "name" (or .name $login)
+        "avatar" (or .avatar "")
+        "bio" (or .bio "")
+        "url" (or .url (printf "https://github.com/%s" $login)) -}}
 {{- end -}}
 {{- return $data -}}

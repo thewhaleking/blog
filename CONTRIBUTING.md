@@ -1,8 +1,8 @@
 # Contributing a post
 
-Posts are Markdown, added via pull request. When your PR merges to `master`, a
-GitHub Action builds the site and publishes it to GitHub Pages. There is no
-database and no server — just static files.
+Posts are Markdown, added via pull request. When your PR merges to `master`,
+Cloudflare Pages builds the site and publishes it. There is no database and no
+server — just static files.
 
 ## Prerequisites
 
@@ -54,18 +54,21 @@ Your content here.
 
 ## Authors
 
-Authors **are GitHub usernames** — just put your handle(s) in `authors`. At build
-time the site fetches your GitHub display name, avatar, and bio, so each author
-automatically gets an archive page at `/authors/<username>/` with their profile and
-all their posts. There are no author files to maintain.
+Authors **are GitHub usernames** — just put your handle(s) in `authors`. Display
+names, avatars, and bios come from `data/authors.yaml`, so each author gets an
+archive page at `/authors/<username>/` with their profile and all their posts.
+There are no author files to maintain by hand.
 
 ```yaml
 authors: ["thewhaleking"]            # single author
 authors: ["thewhaleking", "octocat"] # co-authored
 ```
 
-If GitHub is unreachable or the username is wrong, the byline gracefully falls back
-to the raw username (the build still succeeds).
+`data/authors.yaml` is regenerated from the GitHub API by a scheduled workflow
+that opens a PR with any changes — the site build never calls GitHub. A
+brand-new author may show as the raw username until that refresh PR merges; to
+populate it immediately, run **Actions → Refresh author profiles → Run
+workflow** (or `python scripts/refresh_authors.py` locally) and merge the PR.
 
 ## Preview locally
 
@@ -85,6 +88,7 @@ git push -u origin my-post
 # open a PR against master
 ```
 
-CI builds your branch on the PR. **If the build fails, the post won't merge** —
-fix the reported error (usually bad frontmatter) and push again. Once merged, the
-deploy workflow publishes it automatically.
+Cloudflare Pages builds your branch and posts a preview deployment on the PR.
+**If the build fails, fix the reported error** (usually bad frontmatter) and push
+again; use the preview URL to check your post renders before merging. Once merged,
+Cloudflare publishes it to production automatically.
