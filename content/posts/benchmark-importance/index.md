@@ -27,15 +27,15 @@ discuss here is the numbers themselves, and what they mean.
 
 Take this table for example:
 ```
-  ┌─────────────────────────────────────────────────────┬─────────┬────────────┬─────────┐
-  │                      Operation                      │   asi   │ v11 (Rust) │  ratio  │
-  ├─────────────────────────────────────────────────────┼─────────┼────────────┼─────────┤
-  │ build 10k storage keys                              │ 19ms    │ 8.5ms      │ 2.2x    │
-  ├─────────────────────────────────────────────────────┼─────────┼────────────┼─────────┤
-  │ decode 10k Account values                           │ 268ms   │ 14ms       │ ~20x    │
-  ├─────────────────────────────────────────────────────┼─────────┼────────────┼─────────┤
-  │ decode 1000-entry map page (Account / Keys / Bonds) │ 13–29ms │ 0.7–1.8ms  │ 15–25x  │
-  └─────────────────────────────────────────────────────┴─────────┴────────────┴─────────┘
+  ┌─────────────────────────────┬─────────┬────────────┬─────────┐
+  │ Operation                   │   asi   │ v11 (Rust) │  ratio  │
+  ├─────────────────────────────┼─────────┼────────────┼─────────┤
+  │ build 10k storage keys      │ 19ms    │ 8.5ms      │ 2.2x    │
+  ├─────────────────────────────┼─────────┼────────────┼─────────┤
+  │ decode 10k Account values   │ 268ms   │ 14ms       │ ~20x    │
+  ├─────────────────────────────┼─────────┼────────────┼─────────┤
+  │ decode 1000-entry map page  │ 13–29ms │ 0.7–1.8ms  │ 15–25x  │
+  └─────────────────────────────┴─────────┴────────────┴─────────┘
 ```
 
 An important part of what we do at Latent is publish our open-source libraries. Recently, with the release of Bittensor
@@ -51,11 +51,11 @@ values, and so it's important to see what it means in a real-world situation whe
 the chain, and thus you have part two of the table:
 
 ```
-  ┌─────────────────────────────────────────────────────┬─────────┬────────────┬─────────┐
-  │ e2e query 10k accounts                              │ 4.1s    │ 4.5s       │ ~parity │
-  ├─────────────────────────────────────────────────────┼─────────┼────────────┼─────────┤
-  │ e2e get_block                                       │ ~0.3s   │ ~0.28s     │ ~parity │
-  └─────────────────────────────────────────────────────┴─────────┴────────────┴─────────┘
+  ┌─────────────────────────────┬─────────┬────────────┬─────────┐
+  │ e2e query 10k accounts      │ 4.1s    │ 4.5s       │ ~parity │
+  ├─────────────────────────────┼─────────┼────────────┼─────────┤
+  │ e2e get_block               │ ~0.3s   │ ~0.28s     │ ~parity │
+  └─────────────────────────────┴─────────┴────────────┴─────────┘
 ```
 
 Well, now the decision to switch isn't so cut-and-dry. The pros and cons chart is now centred around maintainability/effort
@@ -71,7 +71,7 @@ that photographers obsess over are pixel peeping and noisy photos, and they're c
 
 Pixel peeping refers to zooming as far in to a photo as you can, and ensuring that every pixel is perfectly clear:
 
-![A pixelated city skyline](pixelated-city.png)
+![A pixelated city skyline](pixelated-city.jpg)
 
 Image noise is random variation of brightness or color information in images, often looking "gritty":
 
