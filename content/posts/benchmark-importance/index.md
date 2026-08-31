@@ -7,6 +7,7 @@ summary: "Understanding what a benchmark truly shows"
 cover:
    image: "cover.jpg"
    alt: "Goodhart's Law"
+   relative: true
 draft: false
 ---
 

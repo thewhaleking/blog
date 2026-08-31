@@ -41,6 +41,7 @@ summary: "One-line description shown in listings and search results."
 cover:                           # optional; drop the image in this folder
   image: "cover.png"
   alt: "Describe the image"
+  relative: true                 # required: makes og:image/twitter:image resolve inside this folder
 draft: false                     # MUST be false to publish
 ---
 

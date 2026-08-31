@@ -7,6 +7,7 @@ summary: "Evaluating your opinions on AI-produced code."
 cover:
   image: "cover.png"
   alt: "AI slop"
+  relative: true
 draft: false
 ---
 
