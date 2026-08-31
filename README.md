@@ -1,5 +1,7 @@
 # Latent Engineering Blog
 
+Live: [blog.latent.to](https://blog.latent.to)
+
 A static engineering blog. Posts are Markdown added via pull requests; merges to
 `master` build the site with [Hugo](https://gohugo.io) and publish it to
 Cloudflare Pages. No database, no server, no `node_modules`.
@@ -28,20 +30,20 @@ hugo server -D                            # preview at localhost:1313
 
 ## Layout
 
-| Path | What |
-| --- | --- |
-| `content/posts/<slug>/` | One post per folder: `index.md` + its images |
-| `archetypes/posts.md` | Frontmatter template for `hugo new` |
-| `layouts/_partials/github_user.html` | Resolves a GitHub profile (name/avatar/bio) from `data/authors.yaml` |
-| `layouts/_partials/author.html` | Override: author byline → linked author pages |
-| `layouts/authors/term.html` | Author archive page (GitHub profile header + their posts) |
-| `assets/css/extended/author.css` | Small styling for the author profile header |
-| `data/authors.yaml` | Baked-in author profiles (generated — don't hand-edit) |
-| `scripts/refresh_authors.py` | Regenerates `data/authors.yaml` from the GitHub API |
-| `.github/workflows/refresh-authors.yml` | Runs the refresh script weekly; opens a PR with changes |
-| `build.sh` | Cloudflare build entrypoint: canonical baseURL on `master`, per-deployment URL on previews |
-| `themes/PaperMod` | Theme (git submodule) |
-| `hugo.toml` | Site config: title, taxonomies (tags, authors), menu, `baseURL` |
+| Path                                    | What                                                                                       |
+|-----------------------------------------|--------------------------------------------------------------------------------------------|
+| `content/posts/<slug>/`                 | One post per folder: `index.md` + its images                                               |
+| `archetypes/posts.md`                   | Frontmatter template for `hugo new`                                                        |
+| `layouts/_partials/github_user.html`    | Resolves a GitHub profile (name/avatar/bio) from `data/authors.yaml`                       |
+| `layouts/_partials/author.html`         | Override: author byline → linked author pages                                              |
+| `layouts/authors/term.html`             | Author archive page (GitHub profile header + their posts)                                  |
+| `assets/css/extended/author.css`        | Small styling for the author profile header                                                |
+| `data/authors.yaml`                     | Baked-in author profiles (generated — don't hand-edit)                                     |
+| `scripts/refresh_authors.py`            | Regenerates `data/authors.yaml` from the GitHub API                                        |
+| `.github/workflows/refresh-authors.yml` | Runs the refresh script weekly; opens a PR with changes                                    |
+| `build.sh`                              | Cloudflare build entrypoint: canonical baseURL on `master`, per-deployment URL on previews |
+| `themes/PaperMod`                       | Theme (git submodule)                                                                      |
+| `hugo.toml`                             | Site config: title, taxonomies (tags, authors), menu, `baseURL`                            |
 
 ## Local development
 
@@ -57,11 +59,11 @@ hugo --gc --minify                         # production build into public/
 In the Cloudflare dashboard: **Workers & Pages → Create → Pages → Connect to
 Git**, pick this repo, and set:
 
-| Setting | Value |
-| --- | --- |
-| Build command | `bash build.sh` |
-| Build output directory | `public` |
-| Environment variables | `HUGO_VERSION` = the Hugo extended version to build with |
+| Setting                | Value                                                    |
+|------------------------|----------------------------------------------------------|
+| Build command          | `bash build.sh`                                          |
+| Build output directory | `public`                                                 |
+| Environment variables  | `HUGO_VERSION` = the Hugo extended version to build with |
 
 `build.sh` builds production (the `master` branch) with the canonical `baseURL`
 from `hugo.toml`, and every preview branch with its own `*.pages.dev` URL — so
