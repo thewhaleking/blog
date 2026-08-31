@@ -31,10 +31,18 @@ ShowCodeCopyButtons = true
 ShowToc = true
 defaultTheme = "auto"
 description = "Engineering notes, deep dives, and war stories from the Latent team."
+# Render the home page as the same plain post list as /posts: no home-info
+# hero box (its min-height caused large whitespace on desktop) and no
+# oversized "first entry" treatment.
+disableSpecial1stPost = true
 
-[params.homeInfoParams]
-Title = "Latent Engineering"
-Content = "Deep dives, postmortems, and notes from the team at Latent."
+# Favicon files live in static/; source image is 48x48, smaller sizes are
+# downscaled from it.
+[params.assets]
+favicon = "favicon.png"
+favicon16x16 = "favicon-16x16.png"
+favicon32x32 = "favicon-32x32.png"
+apple_touch_icon = "apple-touch-icon.png"
 
 [[menu.main]]
 identifier = "posts"
