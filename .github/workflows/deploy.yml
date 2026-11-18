@@ -33,17 +33,11 @@ jobs:
         with:
           submodules: recursive # pull in the PaperMod theme
           fetch-depth: 0 # full history for .GitInfo / .Lastmod if used
-      - name: Configure Pages
-        id: pages
-        uses: actions/configure-pages@v6
-        with:
-          # Enable Pages via the API if it isn't already, so the first run
-          # doesn't fail with "Get Pages site failed / Not Found".
-          enablement: true
       - name: Build
-        # base_url is the custom domain once it is set in Settings -> Pages,
-        # and the *.github.io URL before that, so links are always correct.
-        run: hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+        # Uses baseURL from hugo.toml (https://blog.bdhimes.com/). Do not use
+        # the Pages base_url output: it is http:// when "Enforce HTTPS" is off,
+        # and browsers then block the absolute image URLs as mixed content.
+        run: hugo --gc --minify
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:

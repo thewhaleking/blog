@@ -58,7 +58,6 @@ hugo --gc --minify                         # production build into public/
 ## One-time setup
 
 1. **Settings → Pages → Build and deployment → Source**: `GitHub Actions`.
-   (The deploy workflow also enables Pages itself on its first run.)
 2. **Settings → Pages → Custom domain**: `blog.bdhimes.com`, then enable
    **Enforce HTTPS** when the certificate is ready.
 3. DNS for `bdhimes.com`: a `CNAME` record, `blog` → `thewhaleking.github.io`.
@@ -66,9 +65,8 @@ hugo --gc --minify                         # production build into public/
    pull requests**: enable, so the author refresh workflow can open its PR.
 
 The deploy workflow (`.github/workflows/deploy.yml`) builds with the Hugo
-version pinned in `HUGO_VERSION` and with the Pages site URL as `baseURL`, so
-links are correct on the custom domain. Keep `baseURL` in `hugo.toml` equal to
-the custom domain for local production builds.
+version pinned in `HUGO_VERSION` and with `baseURL` from `hugo.toml`. Keep
+`baseURL` equal to the `https://` custom domain.
 
 The build needs no GitHub token: author profiles are read from the committed
 `data/authors.yaml`, not fetched. That file is refreshed out-of-band by the
