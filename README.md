@@ -1,10 +1,10 @@
-# Latent Engineering Blog
+# BD Himes Blog
 
-Live: [blog.latent.to](https://blog.latent.to)
+Live: [blog.bdhimes.com](https://blog.bdhimes.com)
 
 A static engineering blog. Posts are Markdown added via pull requests; merges to
 `master` build the site with [Hugo](https://gohugo.io) and publish it to
-Cloudflare Pages. No database, no server, no `node_modules`.
+GitHub Pages. No database, no server, no `node_modules`.
 
 Authors are GitHub usernames. Display names, avatars, and bios live in
 `data/authors.yaml`, kept in sync with GitHub by a scheduled workflow (see
@@ -13,9 +13,9 @@ author records to maintain by hand.
 
 ```
 PR adds content/posts/<slug>/index.md (+ images)
-  -> Cloudflare Pages builds a preview deployment for the PR
+  -> "Build check" workflow validates the PR builds
   -> merge to master
-  -> Cloudflare Pages builds + publishes production
+  -> "Deploy to GitHub Pages" workflow builds + publishes
 ```
 
 ## Writing a post
@@ -41,7 +41,8 @@ hugo server -D                            # preview at localhost:1313
 | `data/authors.yaml`                     | Baked-in author profiles (generated — don't hand-edit)                                     |
 | `scripts/refresh_authors.py`            | Regenerates `data/authors.yaml` from the GitHub API                                        |
 | `.github/workflows/refresh-authors.yml` | Runs the refresh script weekly; opens a PR with changes                                    |
-| `build.sh`                              | Cloudflare build entrypoint: canonical baseURL on `master`, per-deployment URL on previews |
+| `.github/workflows/deploy.yml`          | Builds `master` and publishes it to GitHub Pages                                           |
+| `.github/workflows/ci.yml`              | Build check on every PR                                                                    |
 | `themes/PaperMod`                       | Theme (git submodule)                                                                      |
 | `hugo.toml`                             | Site config: title, taxonomies (tags, authors), menu, `baseURL`                            |
 
@@ -56,30 +57,22 @@ hugo --gc --minify                         # production build into public/
 
 ## One-time setup
 
-In the Cloudflare dashboard: **Workers & Pages → Create → Pages → Connect to
-Git**, pick this repo, and set:
+1. **Settings → Pages → Build and deployment → Source**: `GitHub Actions`.
+   (The deploy workflow also enables Pages itself on its first run.)
+2. **Settings → Pages → Custom domain**: `blog.bdhimes.com`, then enable
+   **Enforce HTTPS** when the certificate is ready.
+3. DNS for `bdhimes.com`: a `CNAME` record, `blog` → `thewhaleking.github.io`.
+4. **Settings → Actions → General → Allow GitHub Actions to create and approve
+   pull requests**: enable, so the author refresh workflow can open its PR.
 
-| Setting                | Value                                                    |
-|------------------------|----------------------------------------------------------|
-| Build command          | `bash build.sh`                                          |
-| Build output directory | `public`                                                 |
-| Environment variables  | `HUGO_VERSION` = the Hugo extended version to build with |
-
-`build.sh` builds production (the `master` branch) with the canonical `baseURL`
-from `hugo.toml`, and every preview branch with its own `*.pages.dev` URL — so
-preview links stay on the preview instead of jumping to the production domain.
+The deploy workflow (`.github/workflows/deploy.yml`) builds with the Hugo
+version pinned in `HUGO_VERSION` and with the Pages site URL as `baseURL`, so
+links are correct on the custom domain. Keep `baseURL` in `hugo.toml` equal to
+the custom domain for local production builds.
 
 The build needs no GitHub token: author profiles are read from the committed
 `data/authors.yaml`, not fetched. That file is refreshed out-of-band by the
 **Refresh author profiles** workflow (`.github/workflows/refresh-authors.yml`),
 which runs weekly (and on demand via *Actions → Run workflow*), regenerates the
 data from the GitHub API, and opens a PR with any changes. The workflow uses the
-Action's built-in `GITHUB_TOKEN`, so there's no secret to manage — but the repo
-setting **Settings → Actions → General → Allow GitHub Actions to create and
-approve pull requests** must be enabled for it to open the PR.
-
-Cloudflare clones submodules automatically, so the PaperMod theme is pulled in.
-It deploys `master` as production and every PR as its own preview URL (posted as
-a check on the PR). Keep `baseURL` in `hugo.toml` pointed at the production
-domain (your `*.pages.dev` subdomain or a custom domain mapped in the Pages
-project) so absolute links and feeds are correct.
+Action's built-in `GITHUB_TOKEN`, so there is no secret to manage.

@@ -1,7 +1,7 @@
 # Contributing a post
 
 Posts are Markdown, added via pull request. When your PR merges to `master`,
-Cloudflare Pages builds the site and publishes it. There is no database and no
+GitHub Actions builds the site and publishes it to GitHub Pages. There is no database and no
 server — just static files.
 
 ## Prerequisites
@@ -15,7 +15,7 @@ brew install hugo   # macOS
 Clone with submodules so the theme is present:
 
 ```bash
-git clone --recurse-submodules git@github.com:latent-to/blog.git
+git clone --recurse-submodules git@github.com:thewhaleking/blog.git
 # already cloned? then:
 git submodule update --init --recursive
 ```
@@ -89,7 +89,8 @@ git push -u origin my-post
 # open a PR against master
 ```
 
-Cloudflare Pages builds your branch and posts a preview deployment on the PR.
-**If the build fails, fix the reported error** (usually bad frontmatter) and push
-again; use the preview URL to check your post renders before merging. Once merged,
-Cloudflare publishes it to production automatically.
+The **Build check** workflow builds your branch on the PR. **If the build fails,
+fix the reported error** (usually bad frontmatter) and push again. There are no
+preview deployments; use `hugo server -D` to check your post renders before
+merging. Once merged, the **Deploy to GitHub Pages** workflow publishes it
+automatically.

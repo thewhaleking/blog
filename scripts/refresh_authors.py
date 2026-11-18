@@ -67,7 +67,7 @@ def fetch_profile(login: str, token: str | None) -> dict | None:
     """Fetch one GitHub profile; return the author dict or None on failure."""
     req = urllib.request.Request(f"https://api.github.com/users/{login}")
     req.add_header("Accept", "application/vnd.github+json")
-    req.add_header("User-Agent", "latent-blog-refresh-authors")
+    req.add_header("User-Agent", "blog-refresh-authors")
     if token:
         req.add_header("Authorization", f"Bearer {token}")
     try:

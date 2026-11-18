@@ -1,9 +1,9 @@
-# Production URL. Cloudflare Pages builds with this value as-is (no build-time
-# override), so it must match the live site for absolute links/feeds to be
-# correct.
-baseURL = "https://blog.latent.to/"
+# Production URL. The GitHub Pages deploy workflow overrides this with the
+# Pages site URL at build time; keep it equal to the custom domain so local
+# production builds give the same links/feeds.
+baseURL = "https://blog.bdhimes.com/"
 locale = "en-us"
-title = "Latent Engineering"
+title = "BD Himes"
 theme = "PaperMod"
 
 # Generate a clean RSS/Atom feed alongside HTML.
@@ -30,7 +30,7 @@ ShowBreadCrumbs = true
 ShowCodeCopyButtons = true
 ShowToc = true
 defaultTheme = "auto"
-description = "Engineering notes, deep dives, and war stories from the Latent team."
+description = "Engineering notes, deep dives, and war stories from BD Himes."
 # Render the home page as the same plain post list as /posts: no home-info
 # hero box (its min-height caused large whitespace on desktop) and no
 # oversized "first entry" treatment.
